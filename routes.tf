@@ -20,11 +20,11 @@ resource "aws_route_table" "private" {
   }
 }
 
-resource "aws_route_table_association" "public-us-east" {
+resource "aws_route_table_association" "private-eks-subnets" {
   count = 2
 
   subnet_id      = aws_subnet.eks-subnet.*.id[count.index]
-  route_table_id = aws_route_table.public.id
+  route_table_id = aws_route_table.private.id
 }
 
  resource "aws_route_table_association" "private-us-east-1a" {
@@ -36,3 +36,8 @@ resource "aws_route_table_association" "public-us-east" {
    subnet_id      = aws_subnet.rds-subnet-2.id
    route_table_id = aws_route_table.private.id
  }
+
+ resource "aws_route_table_association" "public-us-east" {
+  subnet_id      = aws_subnet.public-subnet-1.id
+  route_table_id = aws_route_table.public.id
+}
