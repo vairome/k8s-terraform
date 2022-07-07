@@ -7,7 +7,7 @@ resource "aws_subnet" "eks-subnet" {
   vpc_id                  = aws_vpc.main.id
 
   tags = tomap({
-    "Name"                                      = "terraform-eks-demo-node",
+    "Name"                                      = "terraform-eks-node-${terraform.workspace}",
     "kubernetes.io/cluster/${var.cluster-name}" = "shared",
   })
 }
@@ -15,7 +15,7 @@ resource "aws_subnet" "rds-subnet-1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.5.0/24"
   availability_zone       = "us-east-1a"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
 
   tags = {
     "Name" = "rds-subnet-us-east-1a-${terraform.workspace}"
@@ -26,7 +26,7 @@ resource "aws_subnet" "rds-subnet-2" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.6.0/24"
   availability_zone       = "us-east-1b"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
 
   tags = {
     "Name" = "rds-subnet-us-east-1b-${terraform.workspace}"
