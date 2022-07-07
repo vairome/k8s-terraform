@@ -4,7 +4,7 @@ resource "aws_db_instance" "pern-postgres" {
   engine                 = "postgres"
   engine_version         = "14.1"
   instance_class         = "db.t3.micro"
-  identifier             = "pern-db-instance"
+  identifier             = "pern-db-instance-${terraform.workspace}"
   db_name                = "postgres"
   username               = "postgres"
   password               = "password"

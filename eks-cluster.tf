@@ -5,8 +5,8 @@
 #  * EKS Cluster
 #
 
-resource "aws_iam_role" "demo-cluster" {
-  name = "terraform-eks-demo-cluster"
+resource "aws_iam_role" "eks-cluster" {
+  name = "terraform-eks-pern-cluster-${terraform.workspace}"
 
   assume_role_policy = <<POLICY
 {
@@ -24,20 +24,20 @@ resource "aws_iam_role" "demo-cluster" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.demo-cluster.name
+  role       = aws_iam_role.eks-cluster.name
 }
 
-resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSVPCResourceController" {
+resource "aws_iam_role_policy_attachment" "cluster-AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.demo-cluster.name
+  role       = aws_iam_role.eks-cluster.name
 }
 
-resource "aws_security_group" "demo-cluster" {
-  name        = "terraform-eks-demo-cluster"
+resource "aws_security_group" "eks-cluster" {
+  name        = "terraform-eks-cluster-${terraform.workspace}"
   description = "Cluster communication with worker nodes"
-  vpc_id      = aws_vpc.demo.id
+  vpc_id      = aws_vpc.main.id
 
   # Inbound traffic
   ingress {
@@ -55,21 +55,21 @@ resource "aws_security_group" "demo-cluster" {
   }
 
   tags = {
-    Name = "terraform-eks-demo"
+    Name = "terraform-eks-${terraform.workspace}"
   }
 }
 
-resource "aws_eks_cluster" "demo" {
+resource "aws_eks_cluster" "pern" {
   name     = var.cluster-name
-  role_arn = aws_iam_role.demo-cluster.arn
+  role_arn = aws_iam_role.eks-cluster.arn
 
   vpc_config {
-    security_group_ids = [aws_security_group.demo-cluster.id]
-    subnet_ids         = aws_subnet.demo[*].id
+    security_group_ids = [aws_security_group.eks-cluster.id]
+    subnet_ids         = aws_subnet.eks-subnet[*].id
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.demo-cluster-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.demo-cluster-AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSVPCResourceController,
   ]
 }
