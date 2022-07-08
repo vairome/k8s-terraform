@@ -1,6 +1,8 @@
-# K8s PERN Stack Application 
+# AWS K8s PERN Stack Application 
 
 This application uses the technological PERN Stack, has a React application that serves as a client, a REST API built with Expres.js and is connected to a Postgres DB. It uses AWS services like EKS, RDS, EC2, CloudWatch, NLB and has a secure network with private subnets to host important services.
+
+## Getting Started
 
 ## How it works
 
