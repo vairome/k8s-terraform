@@ -23,22 +23,22 @@ resource "aws_iam_role" "eks-node" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "node-AmazonEKSWorkerNodePolicy" {
+resource "aws_iam_role_policy_attachment" "eks_node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.eks-node.name
 }
 
-resource "aws_iam_role_policy_attachment" "node-AmazonEKS_CNI_Policy" {
+resource "aws_iam_role_policy_attachment" "eks_node-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.eks-node.name
 }
 
-resource "aws_iam_role_policy_attachment" "node-AmazonEC2ContainerRegistryReadOnly" {
+resource "aws_iam_role_policy_attachment" "eks_node-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks-node.name
 }
 
-resource "aws_eks_node_group" "demo" {
+resource "aws_eks_node_group" "pern" {
   cluster_name    = aws_eks_cluster.pern.name
   node_group_name = "eks-node-group-${terraform.workspace}"
   node_role_arn   = aws_iam_role.eks-node.arn
@@ -51,8 +51,8 @@ resource "aws_eks_node_group" "demo" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.node-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.node-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.node-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.eks_node-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.eks_node-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.eks_node-AmazonEC2ContainerRegistryReadOnly,
   ]
 }

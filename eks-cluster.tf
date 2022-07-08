@@ -24,12 +24,12 @@ resource "aws_iam_role" "eks-cluster" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "cluster-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "eks_cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.eks-cluster.name
 }
 
-resource "aws_iam_role_policy_attachment" "cluster-AmazonEKSVPCResourceController" {
+resource "aws_iam_role_policy_attachment" "eks_cluster-AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.eks-cluster.name
 }
@@ -69,7 +69,7 @@ resource "aws_eks_cluster" "pern" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.cluster-AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.eks_cluster-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.eks_cluster-AmazonEKSVPCResourceController,
   ]
 }
