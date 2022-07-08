@@ -7,7 +7,7 @@ This application uses the technological PERN Stack, has a React application that
 ## How it works
 
 
-## How to deploy this infrastructure in your own AWS account
+## Usage
 
 Clone the repo, and have installed the AWS CLI and Terraform in your local machine, the credentials are passed by the profile of your aws cli configuration.
 
