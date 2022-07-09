@@ -31,7 +31,7 @@ terraform apply
 
 After performing the Terraform Apply, we have to run the following command so that kubeconfig obtains the access configuration to the cluster that we deployed we must to include the name of the cluster and the default region.
 
-`aws eks update-kubeconfig --name eks-cluster-pern --region us-east-1`
+`aws eks update-kubeconfig --name [cluster name] --region [region]`
 
 To verify if we are into the cluster, we can run:
 
