@@ -1,11 +1,20 @@
 # AWS K8s PERN Stack Application 
 
+## Description
+
 This application uses the technological PERN Stack, has a React application that serves as a client, a REST API built with Expres.js and is connected to a Postgres DB. It uses AWS services like EKS, RDS, EC2, CloudWatch, NLB and has a secure network with private subnets to host important services.
 
-## Getting Started
+## Setup
 
-## How it works
-
+aws eks update-kubeconfig --name eks-cluster-pern --region us-east-1
+kubectl get svc
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl port-forward -n argocd svc/argocd-server 8080:443
+kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
+echo LWIwRml1UlN4Vi02VWRRZQ== | base64 --decode
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/aws/deploy.yaml
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=password --namespace=pern-app
 
 ## Usage
 
