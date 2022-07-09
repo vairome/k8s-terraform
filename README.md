@@ -23,7 +23,7 @@ terraform plan
 3) Deploy the infraestructure
 ```js
 terraform apply
-``
+```
 
 ## Setup
 
